@@ -42,20 +42,8 @@ public class CityController : MonoBehaviour
             }
         };
         _buildingsPresenter.Present(buildings);
-        
-        var skyline = new List<PointOfChange>
-        {
-            new PointOfChange
-            {
-                X = 100,
-                Y = 200
-            },
-            new PointOfChange
-            {
-                X = 200,
-                Y = 0
-            }
-        };
-        _skylinePresenter.Present(skyline);
+
+        var builder = new SkylineBuilder();
+        _skylinePresenter.Present(builder.Build(buildings));
     }
 }
