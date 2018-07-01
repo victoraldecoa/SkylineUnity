@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using SkylineBuilder;
+using SkylineUtilities;
 using UnityEngine;
 
-public class CityController : MonoBehaviour
+public class MainInitializer : MonoBehaviour
 {
-    [SerializeField] BuildingsPresenter _buildingsPresenter;
-    [SerializeField] SkylinePresenter _skylinePresenter;
+    [SerializeField] private GameObject _canvas;
 
-    void Awake()
+    private void Awake()
     {
         var buildings = new List<Building>
         {
@@ -41,9 +42,14 @@ public class CityController : MonoBehaviour
                 Height = 300
             }
         };
-        _buildingsPresenter.Present(buildings);
+        
+        var builder = new SkylineBuilder.SkylineBuilder(new LinqBuildingsOrderedByHeight {Buildings = new List<Building>()});
+        var pointOfChanges = builder.Build(buildings);
+        
+        var buildingsPresenter = new BuildingsPresenter();
+        buildingsPresenter.Present(buildings, _canvas);
 
-        var builder = new SkylineBuilder();
-        _skylinePresenter.Present(builder.Build(buildings));
+        var skylinePresenter = new SkylinePresenter(pointOfChanges, _canvas);
+        skylinePresenter.Present();
     }
 }

@@ -1,43 +1,49 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-public class SkylineBuilder
+namespace SkylineBuilder
 {
-    public List<PointOfChange> Build(List<Building> buildings)
+    public class SkylineBuilder
     {
-        var skyline = new List<PointOfChange>();
-        var orderedBuildings = new BuildingsOrderedByHeight
-        {
-            Buildings = new List<Building>()
-        };
-        var events = new List<ChangeEvent>();
+        private IBuildingsOrderedByHeight BuildingsOrderedByHeight { get; set; }
 
-        foreach (var building in buildings)
+        public SkylineBuilder(IBuildingsOrderedByHeight buildingsOrderedByHeight)
         {
-            events.Add(new AscendEvent
-            {
-                OngoingBuildings = orderedBuildings,
-                OriginalBuilding = building,
-                Output = skyline,
-                X = building.Start
-            });
-            events.Add(new DescendEvent
-            {
-                OngoingBuildings = orderedBuildings,
-                OriginalBuilding = building,
-                Output = skyline,
-                X = building.End
-            });
-        }
-
-        events = events.OrderBy(e => e.X).ToList();
-        
-        foreach (var change in events)
-        {
-            change.Process();
+            BuildingsOrderedByHeight = buildingsOrderedByHeight;
         }
         
-        return skyline;
+        public IEnumerable<PointOfChange> Build(IEnumerable<Building> buildings)
+        {
+            var skyline = new List<PointOfChange>();
+            var orderedBuildings = BuildingsOrderedByHeight;
+            var events = new List<ChangeEvent>();
+
+            foreach (var building in buildings)
+            {
+                events.Add(new AscendEvent
+                {
+                    OngoingBuildings = orderedBuildings,
+                    OriginalBuilding = building,
+                    Output = skyline,
+                    X = building.Start
+                });
+                events.Add(new DescendEvent
+                {
+                    OngoingBuildings = orderedBuildings,
+                    OriginalBuilding = building,
+                    Output = skyline,
+                    X = building.End
+                });
+            }
+
+            events = events.OrderBy(e => e.X).ToList();
+        
+            foreach (var change in events)
+            {
+                change.Process();
+            }
+        
+            return skyline;
+        }
     }
 }

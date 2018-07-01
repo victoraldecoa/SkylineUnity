@@ -1,0 +1,10 @@
+{
+    "name": "SkylinePresenter",
+    "references": [
+        "SkylineBuilder"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

@@ -2,11 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildingsPresenter : MonoBehaviour
+public class BuildingsPresenter
 {
-    [SerializeField] GameObject _canvas;
-    
-    public void Present(List<Building> buildings)
+    public void Present(List<Building> buildings, GameObject canvas)
     {
         var index = 0;
         foreach (var building in buildings)
@@ -16,7 +14,7 @@ public class BuildingsPresenter : MonoBehaviour
             var color = Color.HSVToRGB(hue, 1f, 1f);
             color.a = 0.4f;
             image.color = color;
-            image.transform.SetParent(_canvas.transform, false);
+            image.transform.SetParent(canvas.transform, false);
             var rect = image.rectTransform;
             rect.anchorMin = Vector2.zero;
             rect.anchorMax = Vector2.zero;

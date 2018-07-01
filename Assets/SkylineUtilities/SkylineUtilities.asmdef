@@ -1,0 +1,10 @@
+{
+    "name": "SkylineUtilities",
+    "references": [
+        "SkylineBuilder"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

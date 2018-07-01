@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 
-public abstract class ChangeEvent
+namespace SkylineBuilder
 {
-    public BuildingsOrderedByHeight OngoingBuildings { protected get; set; }
-    public List<PointOfChange> Output { protected get; set; }
-    public float X { get; set; }
-    public Building OriginalBuilding { protected get; set; }
+    public abstract class ChangeEvent
+    {
+        public IBuildingsOrderedByHeight OngoingBuildings { protected get; set; }
+        public List<PointOfChange> Output { protected get; set; }
+        public float X { get; set; }
+        public Building OriginalBuilding { protected get; set; }
 
-    public abstract void Process();
+        public abstract void Process();
+    }
 }
